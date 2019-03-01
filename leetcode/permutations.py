@@ -2,6 +2,7 @@
 
 from typing import List
 
+
 class Solution:
     def permute(self, xs: List[int]) -> List[List[int]]:
         if not xs:
@@ -11,7 +12,6 @@ class Solution:
             for i, x in enumerate(xs):
                 for p in self.permute(xs[:i] + xs[i + 1:]):
                     r.append([x] + p)
-
             return r
 
 
