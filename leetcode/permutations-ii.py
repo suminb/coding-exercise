@@ -17,11 +17,7 @@ class Solution:
             return r
 
 
-def assert_list_equals(xs, ys):
-    assert set(tuple([tuple(x) for x in xs])) == set(tuple([tuple(y) for y in ys]))
-
-
-def test():
+def test(assert_list_equals):
     s = Solution()
 
     p = s.permuteUnique([])
