@@ -31,3 +31,18 @@ class Solution:
             node = node.right
         return res
 
+    # NOTE: Not a requirement, but just out of curiosity
+
+    def iterative_preorder(self, node, res):
+        stack = []
+        while node or stack:
+            while node:
+                stack.append(node)
+                res.append(node.val)
+                node = node.left
+            node = stack.pop()
+            node = node.right
+        return res
+
+    def iterative_postorder(self, node, rest):
+        # TODO: Fill this in
