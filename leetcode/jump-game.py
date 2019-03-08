@@ -6,6 +6,19 @@ from typing import List
 class Solution:
     def canJump(self, nums: List[int]) -> bool:
         n = len(nums)
+        if n <= 1:
+            return True
+
+        # We can determine whether a solution exists by sweeping through the
+        # list, which takes O(n) time; this prevents the exhaustive search.
+        possible = False
+        for pos, jump in enumerate(nums[:-1]):
+            possible = possible or (pos + jump >= n - 1)
+
+        if not possible:
+            return False
+
+        # TODO: Analyze the time compexity of this solution
         visited = {}
         stack = [(0, nums[0])]
         while stack:
@@ -23,6 +36,9 @@ class Solution:
 
 def test():
     s = Solution()
+    assert s.canJump([])
+    assert s.canJump([0])
+    assert s.canJump([2, 0, 0])
     assert s.canJump([2, 3, 1, 1, 4])
     assert not s.canJump([3, 2, 1, 0, 4])
 
