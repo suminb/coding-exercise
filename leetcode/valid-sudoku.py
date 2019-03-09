@@ -9,24 +9,24 @@ class Solution:
         return self.valid_rows(board) and self.valid_cols(board) and self.valid_subboxes(board)
 
     def valid_rows(self, board):
-        valid = True
         for i in range(9):
-            valid = valid and self.is_valid_section(board[i])
-        return valid
+            if not self.is_valid_section(board[i]):
+                return False
+        return True
 
     def valid_cols(self, board):
-        valid = True
         for j in range(9):
-            valid = valid and self.is_valid_section([board[i][j] for i in range(9)])
-        return valid
+            if not self.is_valid_section([board[i][j] for i in range(9)]):
+                return False
+        return True
 
     def valid_subboxes(self, board):
-        valid = True
         for y in range(0, 9, 3):
             for x in range(0, 9, 3):
                 xs = [board[y + i][x + j] for i in range(3) for j in range(3)]
-                valid = valid and self.is_valid_section(xs)
-        return valid
+                if not self.is_valid_section(xs):
+                    return False
+        return True
 
     def is_valid_section(self, elements):
         xs = [int(x) for x in elements if x != '.']
