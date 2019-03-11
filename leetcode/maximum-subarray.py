@@ -1,4 +1,5 @@
 # 53. Maximum Subarray
+# difficulty: easy
 
 from typing import List
 
