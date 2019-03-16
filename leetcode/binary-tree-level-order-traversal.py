@@ -25,3 +25,9 @@ class Solution:
 
         return levels
 
+
+def test(build_binary_tree):
+    s = Solution()
+
+    root = build_binary_tree([3, 9, 20, None, None, 15, 7])
+    assert s.levelOrder(root) == [[3], [9, 20], [15, 7]]
