@@ -9,18 +9,19 @@ from common import TreeNode
 
 class Solution:
     def levelOrder(self, root: TreeNode) -> List[List[int]]:
-        bucket = {}
+        levels = []
         queue = deque([(root, 0)])
 
         while queue:
             node, depth = queue.popleft()
 
             if node:
-                bucket.setdefault(depth, [])
-                bucket[depth].append(node.val)
+                if depth == len(levels):
+                    levels.append([])
+                levels[depth].append(node.val)
 
                 queue.append((node.left, depth + 1))
                 queue.append((node.right, depth + 1))
 
-        return list(bucket.values())
+        return levels
 
