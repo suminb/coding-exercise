@@ -1,4 +1,4 @@
-package main
+package src
 
 import (
 	"golang.org/x/text/encoding"
@@ -7,7 +7,6 @@ import (
 )
 
 // This is a collection of functions to fetch remove resources such as web pages and structured data provided by APIs.
-
 
 // Fetch sends out an HTTP GET request and returns an HTTP response
 func Fetch(url string, params map[string]string, headers map[string]string) (*http.Response, error) {
