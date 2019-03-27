@@ -39,8 +39,9 @@ func ExampleScrape() {
 }
 
 func GetReaderWithURL(url string) io.Reader {
-	// Request the HTML page.
-	resp, _ := Fetch("https://finance.naver.com/marketindex/", make(map[string]string), make(map[string]string))
+	params := make(map[string]string)
+	headers := make(map[string]string)
+	resp, _ := Fetch("https://finance.naver.com/marketindex/", params, headers)
 	defer resp.Body.Close()
 	if resp.StatusCode != 200 {
 		log.Fatalf("status code error: %d %s", resp.StatusCode, resp.Status)
