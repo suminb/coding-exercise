@@ -1,9 +1,10 @@
 package src
 
 import (
-	"golang.org/x/text/encoding"
 	"io"
 	"net/http"
+
+	"golang.org/x/text/encoding"
 )
 
 // This is a collection of functions to fetch remove resources such as web pages and structured data provided by APIs.
