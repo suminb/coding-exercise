@@ -5,8 +5,15 @@ type Portfolio struct {
 }
 
 type PortfolioRecord struct {
-	Asset    Asset
-	Quantity float64
+	Asset        Asset
+	Quantity     float64
+	DesiredShare float64
+}
+
+// NOTE: Not sure if taking *Portfolio as a parameter, but couldn't think of a better way
+func (record *PortfolioRecord) CurrentShare(portfolio *Portfolio) float64 {
+	nav := portfolio.CalcNetAssetValue()
+	return record.Asset.UnitPrice * record.Quantity / nav
 }
 
 type Asset struct {
