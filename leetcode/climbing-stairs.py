@@ -10,15 +10,14 @@ class Solution:
         return climb_stairs_2(n, cache)
 
 
-def climb_stairs_1(n):
+def climb_stairs_1(n, depth=1):
     """Brute force solution"""
     if n < 0:
         return 0
     elif n == 0:
-        print(n)
         return 1
     else:
-        return climb_stairs_1(n - 1) + climb_stairs_1(n - 2)
+        return climb_stairs_1(n - 1, depth+1) + climb_stairs_1(n - 2, depth+1)
 
 
 def climb_stairs_2(n: int, cache: dict):
@@ -40,13 +39,16 @@ def climb_stairs_2(n: int, cache: dict):
     (2, 2),
     (3, 3),
     (4, 5),
+    (5, 8),
+    (8, 34),
+    (15, 987),
 ])
 def test(n, x):
-    # try:
-    #     assert x == climb_stairs_1(x)
-    # except RecursionError:
-    #     pass
+    try:
+        assert x == climb_stairs_1(n)
+    except RecursionError:
+        pass
 
     cache = {}
-    assert x == climb_stairs_2(x, cache)
+    assert x == climb_stairs_2(n, cache)
 
