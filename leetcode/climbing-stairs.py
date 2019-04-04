@@ -33,6 +33,18 @@ def climb_stairs_2(n: int, cache: dict):
         return cache[n]
 
 
+def climb_stairs_3(n):
+    """Dynamic programming."""
+    if n < 0:
+        return 0
+
+    results = {0: 1, 1: 1}
+    for i in range(2, n + 1):
+        results[i] = results[i - 1] + results[i - 2]
+
+    return results[n]
+
+
 @pytest.mark.parametrize('n, x', [
     (0, 1),
     (1, 1),
@@ -51,4 +63,6 @@ def test(n, x):
 
     cache = {}
     assert x == climb_stairs_2(n, cache)
+
+    assert x == climb_stairs_3(n)
 
