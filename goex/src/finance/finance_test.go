@@ -1,14 +1,13 @@
 package finance
 
 import (
-	"fmt"
 	"math"
 	"testing"
 )
 
 const delta = 0.000001
 
-var portfolio, portfolio2 Portfolio
+var portfolio, portfolio2, portfolio3 Portfolio
 
 func init() {
 	records := []PortfolioRecord{
@@ -24,6 +23,16 @@ func init() {
 		{Asset: Asset{Name: "Cash", Type: Cash, UnitPrice: 1000}, Quantity: 100, DesiredShare: 0.3},
 	}
 	portfolio2 = Portfolio{Records: records}
+
+	portfolio3 = Portfolio{
+		Records: []PortfolioRecord{
+			{Asset: Asset{Name: "Fund 1", Type: Fund, UnitPrice: 1090.68}, Quantity: 948, DesiredShare: 0.15},
+			{Asset: Asset{Name: "Fund 2", Type: Fund, UnitPrice: 1053.94}, Quantity: 1971, DesiredShare: 0.15},
+			{Asset: Asset{Name: "Fund 3", Type: Fund, UnitPrice: 881.43}, Quantity: 1199, DesiredShare: 0.2},
+			{Asset: Asset{Name: "Fund 4", Type: Fund, UnitPrice: 1002.43}, Quantity: 4160, DesiredShare: 0.2},
+			{Asset: Asset{Name: "Fund 5", Type: Deposit, UnitPrice: 1002.43}, Quantity: 4160, DesiredShare: 0.3},
+		},
+	}
 }
 
 func TestPortfolio_CalcNetAssetValue(t *testing.T) {

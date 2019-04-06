@@ -35,6 +35,8 @@ const (
 	Cash    AssetType = 1
 	Bond    AssetType = 2
 	Stock   AssetType = 3
+	Fund    AssetType = 4
+	Deposit AssetType = 5
 )
 
 func (portfolio *Portfolio) CalcNetAssetValue() float64 {
