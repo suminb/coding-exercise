@@ -1,6 +1,7 @@
 package finance
 
 import (
+	"fmt"
 	"math"
 	"testing"
 )
@@ -57,9 +58,13 @@ func TestPortfolio_Rebalance(t *testing.T) {
 	expected := []float64{-10, 20, -10}
 	plans := portfolio2.Rebalance()
 	for i, p := range plans {
-		actual := p.Quantity
-		if expected[i] != actual {
-			t.Errorf("Rebalance plan for Asset-%s is incorrect: expected=%f, actual=%f\n", p.Asset.Name, expected, actual)
-		}
+		assertEquals(t, expected[i], p.Quantity,
+			fmt.Sprintf("Rebalance plan for Asset-%s is incorrect", p.Asset.Name))
+	}
+}
+
+func assertEquals(t *testing.T, expected interface{}, actual interface{}, errorMessage string) {
+	if expected != actual {
+		t.Errorf("%s (expected=%s, actual=%s)\n", errorMessage, expected, actual)
 	}
 }
