@@ -45,8 +45,12 @@ func TestPortfolioRecord_CurrentShare(t *testing.T) {
 }
 
 func TestPortfolio_Rebalance(t *testing.T) {
+	expected := []float64{-10, 20, -10}
 	plans := portfolio2.Rebalance()
-	for _, p := range plans {
-		fmt.Printf("%s %f\n", p.Asset.Name, p.Quantity)
+	for i, p := range plans {
+		actual := p.Quantity
+		if expected[i] != actual {
+			t.Errorf("Rebalance plan for Asset-%s is incorrect: expected=%f, actual=%f\n", p.Asset.Name, expected, actual)
+		}
 	}
 }
