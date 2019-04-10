@@ -1,11 +1,7 @@
 # 100. Same Tree
 
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+from common import TreeNode
+
 
 class Solution:
     def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
@@ -19,4 +15,3 @@ class Solution:
             return p.val == q.val \
                 and self.isSameTree(p.left, q.left) \
                 and self.isSameTree(p.right, q.right)
-

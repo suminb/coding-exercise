@@ -1,11 +1,9 @@
 # 94. Binary Tree Inorder Traversal
 
-# Definition for a binary tree node.
-# class TreeNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.left = None
-#         self.right = None
+from typing import List
+
+from common import TreeNode
+
 
 class Solution:
     def inorderTraversal(self, root: TreeNode) -> List[int]:
@@ -45,4 +43,5 @@ class Solution:
         return res
 
     def iterative_postorder(self, node, rest):
+        pass
         # TODO: Fill this in

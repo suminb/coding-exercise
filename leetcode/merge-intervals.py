@@ -1,12 +1,13 @@
 # 56. Merge Intervals
 
 from operator import attrgetter
+from typing import List
 
-# Definition for an interval.
-# class Interval:
-#     def __init__(self, s=0, e=0):
-#         self.start = s
-#         self.end = e
+
+class Interval:
+    def __init__(self, s=0, e=0):
+        self.start = s
+        self.end = e
 
 class Solution:
     def merge(self, intervals: List[Interval]) -> List[Interval]:

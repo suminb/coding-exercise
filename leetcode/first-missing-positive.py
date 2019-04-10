@@ -2,6 +2,8 @@
 # difficulty: hard
 # https://leetcode.com/problems/first-missing-positive/
 
+from typing import List
+
 import pytest
 
 
