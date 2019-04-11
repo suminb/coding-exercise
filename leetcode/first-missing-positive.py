@@ -9,21 +9,28 @@ import pytest
 
 class Solution:
     def firstMissingPositive(self, xs: List[int]) -> int:
-        # FIMXE: Your algorithm should run in O(n) time and uses constant extra space.
-        ps = [x for x in set(xs) if x > 0]
-        if not ps:
-            return 1
+        """Found a magical algorithm on https://leetcode.com/problems/first-missing-positive/discuss/17080/Python-O(1)-space-O(n)-time-solution-with-explanation
+        """
+        # We will need in case of xs is consist of all consecutive positive
+        # numbers.
+        xs.append(0)
+        n = len(xs)
 
-        pmin, pmax, psum = min(ps), max(ps), sum(ps)
-        
-        if pmin > 1:
-            return 1
-        else:
-            fullsum = pmax * (pmax + 1) // 2
-            if psum == fullsum:
-                return pmax + 1
-            else:
-                return fullsum - psum
+        # Given a list of length of n, the first missing positive will be in
+        # [1, n + 1] range. So we can ignore all other values out of this
+        # range.
+        for i, x in enumerate(xs):
+            if x < 0 or x >= n:
+                xs[i] = 0
+
+        for i, x in enumerate(xs):
+            xs[x % n] += n
+
+        for i, x in enumerate(xs):
+            if x // n == 0:
+                return i
+
+        return n
 
 
 @pytest.mark.parametrize('xs, expected', [
@@ -33,6 +40,7 @@ class Solution:
     ([7,8,9,11,12], 1),
     ([1, 1], 2),
     ([1, 1000], 2),
+    ([0, 3], 1),
 ])
 def test(xs, expected):
     s = Solution()
