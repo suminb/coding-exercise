@@ -1,6 +1,9 @@
 package leetcode
 
-import "fmt"
+import (
+	"fmt"
+	"testing"
+)
 
 type ListNode struct {
 	Val  int
@@ -33,4 +36,13 @@ func PrintLinkedList(head *ListNode) {
 		node = node.Next
 	}
 	fmt.Println()
+}
+
+func assertEquals(t *testing.T, expected interface{}, actual interface{}, errorMessage string) bool {
+	if expected != actual {
+		t.Errorf("%s (expected=%s, actual=%s)\n", errorMessage, expected, actual)
+		return false
+	} else {
+		return true
+	}
 }
