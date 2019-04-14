@@ -6,22 +6,27 @@ import pytest
 
 class Solution:
     def mySqrt(self, x: int) -> int:
-        p = leading_one_position(x)
-        sqrt = 0
-        while p >= 0:
-            mask = 1 << p
-            print(f'sqrt={sqrt}, x={x}, p={p}, mask={mask}, masked={(x & mask) >> p}')
-            sqrt = sqrt | ((x & mask) >> (p - p // 2))
-            p -= 1
-        return sqrt
+        return binary_search_sqrt(x)
 
 
-def leading_one_position(x):
-    i = -1
-    while x != 0:
-        x = x >> 1
-        i += 1
-    return i
+def binary_search_sqrt(x):
+    left, right, v = 1, x, x // 2
+
+    if x == 0:
+        return 0
+
+    while v >= 1:
+        if v * v > x:
+            right = v
+            v //= 2
+        elif v * v < x:
+            left = max(left, v)
+            v = (left + right) // 2
+            if left == v:
+                return v
+        else:
+            return v
+    return left
 
 
 @pytest.mark.parametrize('x, expected', [
@@ -36,6 +41,11 @@ def leading_one_position(x):
     (15, 3),
     (16, 4),
     (17, 4),
+    (19, 4),
+    (1000, 31),
+    (1234, 35),
+    (12345, 111),
+    (777777, 881),
 ])
 def test(x, expected):
     s = Solution()
