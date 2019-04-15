@@ -37,10 +37,9 @@ func init() {
 }
 
 func TestPortfolio_CalcNetAssetValue(t *testing.T) {
-	nav := portfolio.CalcNetAssetValue()
-	if nav != (190*200 + 28*1480 + 1850*100) {
-		t.Errorf("Wrong NAV: %f\n", nav)
-	}
+	expected := 190*200 + 28*1480 + 1850*100
+	actual := portfolio.CalcNetAssetValue()
+	assertEquals(t, expected, actual, "Incorrect NAV")
 }
 
 func TestPortfolioRecord_CurrentShare(t *testing.T) {
@@ -63,6 +62,7 @@ func TestPortfolio_Rebalance(t *testing.T) {
 	}
 }
 
+// Looks like `interface{}` is the best workaround to deal with generic types.
 func assertEquals(t *testing.T, expected interface{}, actual interface{}, errorMessage string) {
 	if expected != actual {
 		t.Errorf("%s (expected=%s, actual=%s)\n", errorMessage, expected, actual)
