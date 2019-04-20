@@ -13,16 +13,32 @@ class Solution:
         """
         Do not return anything, modify nums in-place instead.
         """
-        color_counts = [0, 0, 0]
-        for x in nums:
-            color_counts[x] += 1
+        one_pass_solution(nums)
 
-        color_index = 0
-        for i, x in enumerate(nums):
-            while color_counts[color_index] <= 0:
-                color_index += 1
-            nums[i] = color_index
-            color_counts[color_index] -= 1
+def two_pass_solution(nums):
+    color_counts = [0, 0, 0]
+    for x in nums:
+        color_counts[x] += 1
+
+    color_index = 0
+    for i, x in enumerate(nums):
+        while color_counts[color_index] <= 0:
+            color_index += 1
+        nums[i] = color_index
+        color_counts[color_index] -= 1
+
+
+def one_pass_solution(nums):
+    """NOTE: Lomuto partition"""
+    j = k = 0
+    for i, v in enumerate(nums):
+        nums[i] = 2
+        if v < 2:
+            nums[j] = 1
+            j += 1
+        if v == 0:
+            nums[k] = 0
+            k += 1
 
 
 @pytest.mark.parametrize('values, expected', [
