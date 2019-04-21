@@ -3,6 +3,8 @@
 
 from typing import List
 
+import pytest
+
 from common import build_binary_tree, TreeNode
 
 
@@ -23,6 +25,7 @@ def path_sum(node, subtotal, target):
         return 0
 
 
+@pytest.mark.skip
 def test():
     s = Solution()
 
