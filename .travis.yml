@@ -1,0 +1,13 @@
+sudo: false
+
+language: python
+python:
+  - "3.6"
+
+jobs:
+  include:
+    - stage: Python build and test
+      install:
+        - pip install pytest pytest-cov
+      script:
+        - py.test -v leetcode/*.py --cov finance --cov-report term-missing
