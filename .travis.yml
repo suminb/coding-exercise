@@ -8,6 +8,6 @@ jobs:
   include:
     - stage: Python build and test
       install:
-        - pip install pytest pytest-cov
+        - pip install -r leetcode/requirements.txt
       script:
         - py.test -v leetcode/*.py --cov finance --cov-report term-missing
