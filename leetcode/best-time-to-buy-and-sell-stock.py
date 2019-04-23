@@ -38,4 +38,4 @@ def test(values, expected):
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'best-time-to-buy-and-sell-stock.py'])
+    pytest.main(['-v', __file__])

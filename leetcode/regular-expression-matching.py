@@ -104,4 +104,4 @@ def test():
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'regular-expression-matching.py'])
+    pytest.main(['-v', __file__])

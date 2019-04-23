@@ -53,4 +53,4 @@ def test(x, expected):
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'sqrtx.py'])
+    pytest.main(['-v', __file__])

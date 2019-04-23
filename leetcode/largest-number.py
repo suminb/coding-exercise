@@ -51,4 +51,4 @@ def test(nums, expected):
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'largest-number.py'])
+    pytest.main(['-v', __file__])

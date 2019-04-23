@@ -27,4 +27,4 @@ def test(xs, expected):
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'valid-palindrome.py'])
+    pytest.main(['-v', __file__])

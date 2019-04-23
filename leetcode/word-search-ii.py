@@ -23,13 +23,12 @@ def contains_word(board, word):
 
 
 def contains_word_from(board, word, i, j):
-    k = 0
     n, m = len(board), len(board[0])
     visited = {}
-    queue = deque([(i, j)])
+    queue = deque([(i, j, 0)])
 
     while queue:
-        i, j = queue.popleft() 
+        i, j, k = queue.popleft() 
         if not (0 <= i < n and 0 <= j < m):
             continue
         if (i, j) in visited:
@@ -40,10 +39,10 @@ def contains_word_from(board, word, i, j):
         if k < len(word) and char == word[k]:
             if k + 1 == len(word):
                 return True
-            queue.append((i - 1, j))
-            queue.append((i + 1, j))
-            queue.append((i, j - 1))
-            queue.append((i, j + 1))
+            queue.append((i - 1, j, k + 1))
+            queue.append((i + 1, j, k + 1))
+            queue.append((i, j - 1, k + 1))
+            queue.append((i, j + 1, k + 1))
             visited[(i, j)] = True
             k += 1
 
@@ -112,5 +111,17 @@ def test_find_words_3():
     assert expected == s.findWords(board, words)
 
 
+def test_find_words_4():
+    board = [
+        ['a', 'b'],
+        ['c', 'd'],
+    ]
+    words = ['ab', 'cb', 'ad', 'bd', 'ac', 'ca', 'da', 'bc', 'db', 'adcb', 'dabc', 'abb', 'acb']
+    expected = ['ab', 'ac', 'bd', 'ca', 'db']
+
+    s = Solution()
+    assert expected == s.findWords(board, words)
+
+
 if __name__ == '__main__':
-    pytest.main(['-v', 'word-search-ii.py'])
+    pytest.main(['-v', __file__])

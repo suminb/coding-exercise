@@ -18,7 +18,7 @@ def linear_time_solution(nums):
     for x in nums:
         counts.setdefault(x, 0)
         counts[x] += 1
-        
+
     return any([x > 1 for x in counts.values()])
 
 
@@ -42,4 +42,4 @@ def test(values, expected):
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'contains-duplicate.py'])
+    pytest.main(['-v', __file__])

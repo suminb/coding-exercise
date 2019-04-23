@@ -54,4 +54,4 @@ def test(values, expected):
 
 
 if __name__ == '__main__':
-    pytest.main(['-v', 'sort-colors.py'])
+    pytest.main(['-v', __file__])
