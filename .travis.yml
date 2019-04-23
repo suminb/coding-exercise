@@ -1,13 +1,19 @@
 sudo: false
 
-language: python
-python:
-  - "3.6"
-
 jobs:
   include:
     - stage: Python build and test
+      language: python
+      python:
+        - 3.6
       install:
         - pip install -r leetcode/requirements.txt
       script:
         - py.test -v leetcode/*.py --cov finance --cov-report term-missing
+    - stage: Go build and test
+      language: go
+      go:
+        - 1.12.4
+      script:
+        - cd leetcode
+        - go test
