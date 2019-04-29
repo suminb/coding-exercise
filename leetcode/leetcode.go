@@ -46,3 +46,12 @@ func assertEquals(t *testing.T, expected interface{}, actual interface{}, errorM
 		return true
 	}
 }
+
+func assertTrue(t *testing.T, evaluated bool, errorMessage string) bool {
+	if !evaluated {
+		t.Errorf("%s\n", errorMessage)
+		return false
+	} else {
+		return true
+	}
+}
