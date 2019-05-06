@@ -16,4 +16,4 @@ jobs:
         - 1.12.4
       script:
         - cd leetcode
-        - go test
+        - go test -v
