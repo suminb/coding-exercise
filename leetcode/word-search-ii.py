@@ -8,9 +8,6 @@ from typing import List
 import pytest
 
 
-UP, RIGHT, DOWN, LEFT = 1, 2, 4, 8
-
-
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
         return sorted([word for word in words if contains_word(board, word)])
@@ -20,37 +17,38 @@ def contains_word(board, word):
     n, m = len(board), len(board[0])
     for i in range(n):
         for j in range(m):
-            if contains_word_from(board, word, i, j):
+            visited = {}
+            if contains_word_from(board, word, i, j, 0, visited):
                 return True
     return False
 
 
-def contains_word_from(board, word, i, j):
+def contains_word_from(board, word, i, j, k, visited):
     n, m = len(board), len(board[0])
-    visited = {}
-    stack = [(i, j, 0)]
+    word_len = len(word)
 
-    while stack:
-        i, j, k = stack.pop() 
-        if not (0 <= i < n and 0 <= j < m):
-            continue
-        if (i, j) in visited:
-            continue
+    if not (0 <= i < n and 0 <= j < m):
+        return False
+    if k >= word_len:
+        return False
+    if (i, j) in visited:
+        return False
 
-        char = board[i][j]
+    char = board[i][j]
 
-        if k < len(word) and char == word[k]:
-            if k + 1 == len(word):
+    if char == word[k]:
+        if k + 1 == word_len:
+            return True
+        params = [
+            (i - 1, j),
+            (i, j + 1),
+            (i + 1, j),
+            (i, j - 1),
+        ]
+        visited[(i, j)] = True
+        for ii, jj in params:
+            if contains_word_from(board, word, ii, jj, k + 1, visited):
                 return True
-            params = [
-                (i - 1, j, k + 1),
-                (i, j + 1, k + 1),
-                (i + 1, j, k + 1),
-                (i, j - 1, k + 1),
-            ]
-            for ii, jj, kk  in params:
-                stack.append((ii, jj, kk))
-            visited[(i, j)] = True
 
     return False
 
@@ -127,6 +125,19 @@ def test_find_words_4():
     ]
     words = ['ab', 'cb', 'ad', 'bd', 'ac', 'ca', 'da', 'bc', 'db', 'adcb', 'dabc', 'abb', 'acb']
     expected = ['ab', 'ac', 'bd', 'ca', 'db']
+
+    s = Solution()
+    assert expected == s.findWords(board, words)
+
+
+def test_find_words_5():
+    board = [
+        ['a', 'b', 'c'], 
+        ['a', 'e', 'd'], 
+        ['a', 'f', 'g'], 
+    ]
+    words = ['abcdefg', 'gfedcbaaa', 'eaabcdgfa', 'befa', 'dgc', 'ade']
+    expected = ['abcdefg', 'befa', 'eaabcdgfa', 'gfedcbaaa']
 
     s = Solution()
     assert expected == s.findWords(board, words)
