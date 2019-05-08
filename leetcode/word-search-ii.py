@@ -49,6 +49,7 @@ def contains_word_from(board, word, i, j, k, visited):
         for ii, jj in params:
             if contains_word_from(board, word, ii, jj, k + 1, visited):
                 return True
+        del visited[(i, j)]
 
     return False
 
@@ -142,6 +143,57 @@ def test_find_words_5():
     s = Solution()
     assert expected == s.findWords(board, words)
 
+
+def test_find_words_6():
+    board = [
+        ['b', 'a', 'a', 'b', 'a', 'b'], 
+        ['a', 'b', 'a', 'a', 'a', 'a'], 
+        ['a', 'b', 'a', 'a', 'a', 'b'], 
+        ['a', 'b', 'a', 'b', 'b', 'a'], 
+        ['a', 'a', 'b', 'b', 'a', 'b'], 
+        ['a', 'a', 'b', 'b', 'b', 'a'], 
+        ['a', 'a', 'b', 'a', 'a', 'b'], 
+    ]
+    words = [
+        'bbaabaabaaaaabaababaaaaababb',
+        'aabbaaabaaabaabaaaaaabbaaaba',
+        'babaababbbbbbbaabaababaabaaa',
+        'bbbaaabaabbaaababababbbbbaaa',
+        'babbabbbbaabbabaaaaaabbbaaab',
+        'bbbababbbbbbbababbabbbbbabaa',
+        'babababbababaabbbbabbbbabbba',
+        'abbbbbbaabaaabaaababaabbabba',
+        'aabaabababbbbbbababbbababbaa',
+        'aabbbbabbaababaaaabababbaaba',
+        'ababaababaaabbabbaabbaabbaba',
+        'abaabbbaaaaababbbaaaaabbbaab',
+        'aabbabaabaabbabababaaabbbaab',
+        'baaabaaaabbabaaabaabababaaaa',
+        'aaabbabaaaababbabbaabbaabbaa',
+        'aaabaaaaabaabbabaabbbbaabaaa',
+        'abbaabbaaaabbaababababbaabbb',
+        'baabaababbbbaaaabaaabbababbb',
+        'aabaababbaababbaaabaabababab',
+        'abbaaabbaabaabaabbbbaabbbbbb',
+        'aaababaabbaaabbbaaabbabbabab',
+        'bbababbbabbbbabbbbabbbbbabaa',
+        'abbbaabbbaaababbbababbababba',
+        'bbbbbbbabbbababbabaabababaab',
+        'aaaababaabbbbabaaaaabaaaaabb',
+        'bbaaabbbbabbaaabbaabbabbaaba',
+        'aabaabbbbaabaabbabaabababaaa',
+        'abbababbbaababaabbababababbb',
+        'aabbbabbaaaababbbbabbababbbb',
+        'babbbaabababbbbbbbbbaabbabaa',
+    ]
+    expected = [
+        'aabbbbabbaababaaaabababbaaba',
+        'abaabbbaaaaababbbaaaaabbbaab',
+        'ababaababaaabbabbaabbaabbaba'
+    ]
+
+    s = Solution()
+    assert expected == s.findWords(board, words)
 
 if __name__ == '__main__':
     pytest.main(['-v', __file__])
