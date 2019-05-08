@@ -8,6 +8,9 @@ from typing import List
 import pytest
 
 
+UP, RIGHT, DOWN, LEFT = 1, 2, 4, 8
+
+
 class Solution:
     def findWords(self, board: List[List[str]], words: List[str]) -> List[str]:
         return sorted([word for word in words if contains_word(board, word)])
@@ -25,10 +28,10 @@ def contains_word(board, word):
 def contains_word_from(board, word, i, j):
     n, m = len(board), len(board[0])
     visited = {}
-    queue = deque([(i, j, 0)])
+    stack = [(i, j, 0)]
 
-    while queue:
-        i, j, k = queue.popleft() 
+    while stack:
+        i, j, k = stack.pop() 
         if not (0 <= i < n and 0 <= j < m):
             continue
         if (i, j) in visited:
@@ -39,12 +42,15 @@ def contains_word_from(board, word, i, j):
         if k < len(word) and char == word[k]:
             if k + 1 == len(word):
                 return True
-            queue.append((i - 1, j, k + 1))
-            queue.append((i + 1, j, k + 1))
-            queue.append((i, j - 1, k + 1))
-            queue.append((i, j + 1, k + 1))
+            params = [
+                (i - 1, j, k + 1),
+                (i, j + 1, k + 1),
+                (i + 1, j, k + 1),
+                (i, j - 1, k + 1),
+            ]
+            for ii, jj, kk  in params:
+                stack.append((ii, jj, kk))
             visited[(i, j)] = True
-            k += 1
 
     return False
 
@@ -87,7 +93,6 @@ def test_find_words_1():
     assert expected == s.findWords(board, words)
 
 
-@pytest.mark.skip
 def test_find_words_2():
     board = [
         ['a', 'b'],
@@ -95,6 +100,9 @@ def test_find_words_2():
     ]
     words = ['aba', 'baa', 'bab', 'aaab', 'aaa', 'aaaa', 'aaba']
     expected = ['aaa', 'aaab', 'aaba', 'aba', 'baa']
+
+    # NOTE: One of the important keys is to use DFS, otherwise it won't catch
+    # an edge case like 'aaba'.
 
     s = Solution()
     assert expected == s.findWords(board, words)
