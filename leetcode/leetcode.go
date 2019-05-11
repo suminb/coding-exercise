@@ -49,9 +49,16 @@ func assertEquals(t *testing.T, expected interface{}, actual interface{}, errorM
 
 func assertTrue(t *testing.T, evaluated bool, errorMessage string) bool {
 	if !evaluated {
-		t.Errorf("%s\n", errorMessage)
+		t.Errorf("Expected false, but got true: %s\n", errorMessage)
 		return false
-	} else {
-		return true
 	}
+	return true
+}
+
+func assertFalse(t *testing.T, evaluated bool, errorMessage string) bool {
+	if evaluated {
+		t.Errorf("Expected true, but got false: %s\n", errorMessage)
+		return false
+	}
+	return true
 }
