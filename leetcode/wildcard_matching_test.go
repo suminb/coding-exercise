@@ -10,10 +10,35 @@ import (
 )
 
 func isMatchWildcard(s string, p string) bool {
-	return isMatchWildcardImpl(s, 0, len(s), p, 0, len(p))
+	return isMatchWildcardLinear(s, 0, len(s), p, 0, len(p))
 }
 
-func isMatchWildcardImpl(s string, i int, m int, p string, j int, n int) bool {
+func isMatchWildcardLinear(s string, i int, m int, p string, j int, n int) bool {
+	iMark, jMark := 0, -1
+	for i < m {
+		if j < n && (p[j] == '?' || p[j] == s[i]) {
+			i++
+			j++
+		} else if j < n && p[j] == '*' {
+			iMark = i
+			jMark = j
+			j++
+		} else if jMark != -1 {
+			j = jMark + 1
+			iMark++
+			i = iMark
+		} else {
+			return false
+		}
+	}
+	for j < n && p[j] == '*' {
+		j++
+	}
+	return j == n
+}
+
+// This works, but way too slow
+func isMatchWildcardDFS(s string, i int, m int, p string, j int, n int) bool {
 	slen, plen := m-i, n-j
 	if plen == 0 {
 		return slen == 0
@@ -23,12 +48,12 @@ func isMatchWildcardImpl(s string, i int, m int, p string, j int, n int) bool {
 		if plen == 1 {
 			return true
 		}
-		return (p[j+1] == '*' && isMatchWildcardImpl(s, i, m, p, j+1, n)) ||
-			(slen >= 1 && p[j+1] == s[i] && isMatchWildcardImpl(s, i+1, m, p, j+2, n)) ||
-			(slen >= 1 && isMatchWildcardImpl(s, i+1, m, p, j, n)) ||
-			isMatchWildcardImpl(s, i, m, p, j+1, n)
+		return (p[j+1] == '*' && isMatchWildcardDFS(s, i, m, p, j+1, n)) ||
+			(slen >= 1 && p[j+1] == s[i] && isMatchWildcardDFS(s, i+1, m, p, j+2, n)) ||
+			(slen >= 1 && isMatchWildcardDFS(s, i+1, m, p, j, n)) ||
+			isMatchWildcardDFS(s, i, m, p, j+1, n)
 	}
-	return slen >= 1 && (p[j] == s[i] || p[j] == '?') && isMatchWildcardImpl(s, i+1, m, p, j+1, n)
+	return slen >= 1 && (p[j] == s[i] || p[j] == '?') && isMatchWildcardDFS(s, i+1, m, p, j+1, n)
 }
 
 func TestIsMatchWildcard(t *testing.T) {
@@ -39,6 +64,7 @@ func TestIsMatchWildcard(t *testing.T) {
 	}{
 		{"", "", true},
 		{"", "*", true},
+		{"", "**", true},
 		{"", "?", false},
 		{"aa", "aa", true},
 		{"aa", "a", false},
@@ -46,9 +72,11 @@ func TestIsMatchWildcard(t *testing.T) {
 		{"cb", "?a", false},
 		{"adceb", "*a*b", true},
 		{"acccb", "a*c?b", true},
+		{"acccccb", "a*c?b", true},
+		{"acccb", "a***c?b", true},
 		{"acdcb", "a*c?b", false},
 		{"aaaabaaaabbbbaabbbaabbaababbabbaaaababaaabbbbbbaabbbabababbaaabaabaaaaaabbaabbbbaababbababaabbbaababbbba", "*****b*aba***babaa*bbaba***a*aaba*b*aa**a*b**ba***a*a*", true},
-		// {"aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b", true},
+		{"aaabbbaabaaaaababaabaaabbabbbbbbbbaabababbabbbaaaaba", "a*******b", false},
 	}
 
 	for _, param := range params {
