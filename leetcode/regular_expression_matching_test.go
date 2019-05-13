@@ -9,11 +9,11 @@ import (
 	"testing"
 )
 
-func isMatch(s string, p string) bool {
-	return isMatchImpl(s, 0, len(s), p, 0, len(p))
+func isMatchRegex(s string, p string) bool {
+	return isMatchRegexImpl(s, 0, len(s), p, 0, len(p))
 }
 
-func isMatchImpl(s string, i int, m int, p string, j int, n int) bool {
+func isMatchRegexImpl(s string, i int, m int, p string, j int, n int) bool {
 	slen, plen := m-i, n-j
 	if plen == 0 {
 		return slen == 0
@@ -27,13 +27,13 @@ func isMatchImpl(s string, i int, m int, p string, j int, n int) bool {
 	// 3. exact star matching
 	// 4. wildcard star matching
 	if plen >= 2 && p[j+1] == '*' {
-		return isMatchImpl(s, i, m, p, j+2, n) ||
-			(firstMatch && isMatchImpl(s, i+1, m, p, j, n))
+		return isMatchRegexImpl(s, i, m, p, j+2, n) ||
+			(firstMatch && isMatchRegexImpl(s, i+1, m, p, j, n))
 	}
-	return firstMatch && isMatchImpl(s, i+1, m, p, j+1, n)
+	return firstMatch && isMatchRegexImpl(s, i+1, m, p, j+1, n)
 }
 
-func TestIsMatch(t *testing.T) {
+func TestIsMatchRegex(t *testing.T) {
 	params := []struct {
 		str      string
 		pattern  string
@@ -50,7 +50,7 @@ func TestIsMatch(t *testing.T) {
 	}
 
 	for _, param := range params {
-		actual := isMatch(param.str, param.pattern)
+		actual := isMatchRegex(param.str, param.pattern)
 		assertEquals(t, param.expected, actual, fmt.Sprintf("Case (%s, %s)", param.str, param.pattern))
 	}
 }
