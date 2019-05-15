@@ -29,6 +29,17 @@ func BuildLinkedList(elements []int) *ListNode {
 	}
 }
 
+// BuildIntArrayFromLinkedList turns a linked list into an array of integers
+func BuildIntArrayFromLinkedList(head *ListNode) []int {
+	array := make([]int, 0)
+	node := head
+	for node != nil {
+		array = append(array, node.Val)
+		node = node.Next
+	}
+	return array
+}
+
 func PrintLinkedList(head *ListNode) {
 	node := head
 	for node != nil {
@@ -36,6 +47,18 @@ func PrintLinkedList(head *ListNode) {
 		node = node.Next
 	}
 	fmt.Println()
+}
+
+func compareIntArrays(xs []int, ys []int) bool {
+	if len(xs) != len(ys) {
+		return false
+	}
+	for i, x := range xs {
+		if x != ys[i] {
+			return false
+		}
+	}
+	return true
 }
 
 func assertEquals(t *testing.T, expected interface{}, actual interface{}, errorMessage string) bool {
