@@ -10,6 +10,20 @@ import (
 )
 
 func swapPairs(head *ListNode) *ListNode {
+	return swapPairsRecursive(head)
+}
+
+func swapPairsRecursive(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+	node := head.Next
+	head.Next = swapPairsRecursive(head.Next.Next)
+	node.Next = head
+	return node
+}
+
+func swapPairsIterative(head *ListNode) *ListNode {
 	var prev *ListNode
 	var newHead *ListNode
 	index := 0
