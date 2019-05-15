@@ -55,3 +55,5 @@ func length(node *ListNode) int {
 	}
 	return n
 }
+
+// TODO: Write some test cases
