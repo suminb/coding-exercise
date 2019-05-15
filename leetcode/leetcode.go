@@ -10,6 +10,10 @@ type ListNode struct {
 	Next *ListNode
 }
 
+func (node ListNode) String() string {
+	return fmt.Sprintf("ListNode(%d)", node.Val)
+}
+
 func BuildLinkedList(elements []int) *ListNode {
 	if len(elements) == 0 {
 		return nil
