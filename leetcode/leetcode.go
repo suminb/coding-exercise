@@ -5,6 +5,7 @@ import (
 	"testing"
 )
 
+// ListNode represents a node of a singly linked list
 type ListNode struct {
 	Val  int
 	Next *ListNode
@@ -17,20 +18,19 @@ func (node ListNode) String() string {
 func BuildLinkedList(elements []int) *ListNode {
 	if len(elements) == 0 {
 		return nil
-	} else {
-		var head, prev *ListNode
-		for _, value := range elements {
-			node := ListNode{Val: value, Next: nil}
-			if head == nil {
-				head = &node
-			}
-			if prev != nil {
-				prev.Next = &node
-			}
-			prev = &node
-		}
-		return head
 	}
+	var head, prev *ListNode
+	for _, value := range elements {
+		node := ListNode{Val: value, Next: nil}
+		if head == nil {
+			head = &node
+		}
+		if prev != nil {
+			prev.Next = &node
+		}
+		prev = &node
+	}
+	return head
 }
 
 // BuildIntArrayFromLinkedList turns a linked list into an array of integers
