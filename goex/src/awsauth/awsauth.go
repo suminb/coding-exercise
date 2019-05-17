@@ -10,6 +10,7 @@ import (
 	"net/http/cookiejar"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -96,15 +97,51 @@ func ProcessSamlForm(reader io.Reader) io.Reader {
 }
 
 func GetRoles(samlDoc *goquery.Document) []string {
-	html, _ := samlDoc.Html()
-	fmt.Println(html)
+	// html, _ := samlDoc.Html()
+	// fmt.Println(html)
 	roles := make([]string, 0)
 	inputFields := samlDoc.Find("input[name=roleIndex]")
 	inputFields.Each(func(i int, s *goquery.Selection) {
 		value, _ := s.Attr("value")
+		// For some reason, we have a newline character in some role names
+		value = strings.Replace(value, "\n", "", -1)
 		roles = append(roles, value)
 	})
 	return roles
+}
+
+func PresentRoles(roles []string) {
+	for i, role := range roles {
+		fmt.Printf("[%d] %s\n", i, role)
+	}
+}
+
+func ChooseRole(roles []string) string {
+	roleCount := len(roles)
+	if roleCount == 0 {
+		log.Fatalln("At least one role is required")
+	}
+	reader := bufio.NewReader(os.Stdin)
+	var role string
+
+	for role == "" {
+		fmt.Print("Choose a role: ")
+		roleIndexStr, _ := reader.ReadString('\n')
+		roleIndexStr = strings.TrimSpace(roleIndexStr)
+		roleIndex, err := strconv.Atoi(roleIndexStr)
+		// TODO: Present valid range to the user
+		if err != nil {
+			log.Printf("'%s' is not a valid role index\n", roleIndexStr)
+			continue
+		}
+		if roleIndex < 0 || roleIndex >= roleCount {
+			log.Printf("Role index %d is out of range\n", roleIndex)
+			continue
+		}
+		role = roles[roleIndex]
+	}
+
+	return role
 }
 
 func NewDocumentFromReader(reader io.Reader) (*goquery.Document, error) {
@@ -116,24 +153,27 @@ func NewDocumentFromReader(reader io.Reader) (*goquery.Document, error) {
 }
 
 func main() {
-	loginURL := os.Getenv("AWS_AUTH_URL")
-	client, _ := MakeSessionedClient()
+	// loginURL := os.Getenv("AWS_AUTH_URL")
+	// client, _ := MakeSessionedClient()
 
-	// Redirect to the auth form
-	loginFormResp, _ := FetchLoginForm(client, loginURL)
-	loginDoc, _ := NewDocumentFromReader(loginFormResp.Body)
+	// // Redirect to the auth form
+	// loginFormResp, _ := FetchLoginForm(client, loginURL)
+	// loginDoc, _ := NewDocumentFromReader(loginFormResp.Body)
 
-	// Authentication
-	authResp, _ := PostAuthForm(client, loginDoc, loginURL)
-	authDoc, _ := NewDocumentFromReader(authResp.Body)
+	// // Authentication
+	// authResp, _ := PostAuthForm(client, loginDoc, loginURL)
+	// authDoc, _ := NewDocumentFromReader(authResp.Body)
 
-	// Choose a role
-	samlResp, _ := PostSamlForm(client, authDoc)
-	samlDoc, _ := NewDocumentFromReader(ProcessSamlForm(samlResp.Body))
+	// // Choose a role
+	// samlResp, _ := PostSamlForm(client, authDoc)
+	// samlDoc, _ := NewDocumentFromReader(ProcessSamlForm(samlResp.Body))
 
-	// reader := GetReaderFromFile("saml.html")
-	// samlDoc, _ := NewDocumentFromReader(ProcessSamlForm(reader))
+	reader := GetReaderFromFile("saml.html")
+	samlDoc, _ := NewDocumentFromReader(ProcessSamlForm(reader))
 
 	roles := GetRoles(samlDoc)
-	fmt.Println(roles)
+	PresentRoles(roles)
+	role := ChooseRole(roles)
+
+	fmt.Printf("Role chosen = %s\n", role)
 }
