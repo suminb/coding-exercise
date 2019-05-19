@@ -53,6 +53,13 @@ func PrintLinkedList(head *ListNode) {
 	fmt.Println()
 }
 
+func min(x int, y int) int {
+	if x < y {
+		return x
+	}
+	return y
+}
+
 func compareIntArrays(xs []int, ys []int) bool {
 	if len(xs) != len(ys) {
 		return false
