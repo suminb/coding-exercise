@@ -1,3 +1,10 @@
+# 1. Two Sum
+# difficulty: easy
+# https://leetcode.com/submissions/detail/202462306/
+
+import pytest
+
+
 class Solution:
     def twoSum(self, nums, target):
         """
@@ -14,4 +21,9 @@ class Solution:
                 cache[target - m] = i
 
 
-# https://leetcode.com/submissions/detail/202462306/
+@pytest.mark.parametrize('nums, target, expected', [
+    ([2, 7, 11, 15], 9, [0, 1]),
+])
+def test_two_sum(nums, target, expected):
+    s = Solution()
+    assert expected == s.twoSum(nums, target)
