@@ -4,65 +4,63 @@
 
 package leetcode
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func longestPalindrome(s string) string {
 	n := len(s)
-	if n <= 1 {
+	if n == 0 {
 		return s
 	}
-	t, i, j := longestPalindromeAux(s, 0, n-1)
-	if t {
-		return s[i : j+1]
+	m := 0       // max length so far
+	x, y := 0, 0 // index of max length
+
+	dp := make([][]bool, n)
+	for i := 0; i < n; i++ {
+		dp[i] = make([]bool, n)
+		dp[i][i] = true
+
+		if i+1 < n && s[i] == s[i+1] {
+			dp[i][i+1] = true
+			m = 2
+			x, y = i, i+1
+		}
 	}
-	return ""
+	for i := n - 1; i >= 0; i-- {
+		for j := i + 1; j < n; j++ {
+			if s[i] == s[j] && dp[i+1][j-1] {
+				dp[i][j] = true
+				if j-i+1 >= m {
+					m = j - i + 1
+					x, y = i, j
+				}
+			}
+		}
+	}
+	return s[x : y+1]
 }
 
-func longestPalindromeAux(s string, i int, j int) (bool, int, int) {
-	if i > j {
-		return false, i, i
-	} else if i == j {
-		return true, i, i
-	}
-
-	if s[i] == s[j] {
-		if j-i == 1 {
-			return true, i, j
-		}
-		t, _, _ := longestPalindromeAux(s, i+1, j-1)
-		if t {
-			return true, i, j
-		}
-	}
-
-	t1, p1, q1 := longestPalindromeAux(s, i+1, j)
-	t2, p2, q2 := longestPalindromeAux(s, i, j-1)
-
-	if t1 && t2 {
-		if q1-p1 > q2-p2 {
-			return t1, p1, q1
-		}
-	} else if t1 {
-		return t1, p1, q1
-	}
-	return t2, p2, q2
-}
-
-func TestLongestPalindrome(t *testing.T) {
+func TestLongestPalindrom(t *testing.T) {
 	params := []struct {
-		value    string
+		input    string
 		expected string
 	}{
 		{"", ""},
 		{"x", "x"},
 		{"xx", "xx"},
+		{"xxx", "xxx"},
+		{"xxxx", "xxxx"},
+		{"abcdcb", "bcdcb"},
 		{"babad", "bab"},
-		{"caba", "aba"},
-		{"abacdfgdcaba", "aba"},
-		{"asdf", "f"},
+		{"cbbd", "bb"},
+		{"abcdcbaabcdc", "cdcbaabcdc"},
+		{"abcba01210", "abcba"},
+		{"::0x123456789876543210", "12345678987654321"},
 	}
 	for _, param := range params {
-		actual := longestPalindrome(param.value)
-		assertEquals(t, param.expected, actual, "Invalid result")
+		actual := longestPalindrome(param.input)
+		assertEquals(t, param.expected, actual, fmt.Sprintf("Case (%s)", param.input))
 	}
 }
