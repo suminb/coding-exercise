@@ -15,6 +15,7 @@ func (node ListNode) String() string {
 	return fmt.Sprintf("ListNode(%d)", node.Val)
 }
 
+// BuildLinkedList builds a linked list from an array list
 func BuildLinkedList(elements []int) *ListNode {
 	if len(elements) == 0 {
 		return nil
@@ -44,6 +45,7 @@ func BuildIntArrayFromLinkedList(head *ListNode) []int {
 	return array
 }
 
+// PrintLinkedList is pretty much self-explanatory
 func PrintLinkedList(head *ListNode) {
 	node := head
 	for node != nil {
@@ -76,9 +78,8 @@ func assertEquals(t *testing.T, expected interface{}, actual interface{}, errorM
 	if expected != actual {
 		t.Errorf("%s (expected=%s, actual=%s)\n", errorMessage, expected, actual)
 		return false
-	} else {
-		return true
 	}
+	return true
 }
 
 func assertTrue(t *testing.T, evaluated bool, errorMessage string) bool {
