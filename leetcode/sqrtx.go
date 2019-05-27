@@ -33,14 +33,6 @@ func binarySearchSqrt(x int) int {
 	return left
 }
 
-func max(x int, y int) int {
-	if x > y {
-		return x
-	} else {
-		return y
-	}
-}
-
 func bruteForceSqrt(x int) int {
 	v := 0
 	for v*v <= x {
