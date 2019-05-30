@@ -30,3 +30,6 @@ def test_next_greater_element(xs, expected):
 
 if __name__ == '__main__':
     pytest.main(['-v', __file__])
+
+
+# Looks like we could solve this in linear time: https://www.ideserve.co.in/learn/next-great-element-in-an-array
