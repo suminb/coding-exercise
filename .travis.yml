@@ -9,7 +9,7 @@ jobs:
       install:
         - pip install -r leetcode/requirements.txt
       script:
-        - py.test -v leetcode/*.py --cov finance --cov-report term-missing
+        - py.test -v leetcode/*.py google/*.py
     - stage: Go build and test
       language: go
       go:
