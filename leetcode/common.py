@@ -3,12 +3,28 @@ class ListNode:
         self.val = x
         self.next = None
 
+    def __repr__(self):
+        return f'ListNode<{self.val}>'
+
 
 class TreeNode:
     def __init__(self, x):
         self.val = x
         self.left = None
         self.right = None
+
+
+def build_linked_list(xs):
+    if not xs:
+        return None
+
+    i, n = 1, len(xs)
+    head = node = ListNode(xs[0])
+    while i < n:
+        node.next = ListNode(xs[i])
+        node = node.next
+        i += 1
+    return head
 
 
 def build_binary_tree(xs):
