@@ -27,6 +27,15 @@ def build_linked_list(xs):
     return head
 
 
+def assert_linked_list(head, xs):
+    count = 0
+    node = head
+    while node is not None:
+        assert node.val == xs[count]
+        node = node.next
+        count += 1
+    assert len(xs) == count
+
 def build_binary_tree(xs):
     """Builds a binary tree from a list of elements."""
     def build(root, xs, i, n):
