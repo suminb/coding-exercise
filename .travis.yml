@@ -8,8 +8,9 @@ jobs:
         - 3.6
       install:
         - pip install -r leetcode/requirements.txt
+        - pip install -r cs212/requirements.txt
       script:
-        - py.test -v leetcode/*.py google/*.py
+        - py.test -v leetcode/*.py google/*.py cs212/test_*.py
     - stage: Go build and test
       language: go
       go:
