@@ -42,10 +42,7 @@ func sumOfSquareOfDigits(digits []int) int {
 }
 
 func TestIsHappyNumber(t *testing.T) {
-	params := []struct {
-		n        int
-		expected bool
-	}{
+	params := []TestParam{
 		{1, true},
 		{2, false},
 		{19, true},
@@ -54,8 +51,11 @@ func TestIsHappyNumber(t *testing.T) {
 		// TODO: More test cases
 	}
 
-	for _, param := range params {
-		actual := isHappy(param.n)
-		assertEquals(t, param.expected, actual, "")
-	}
+	f, _ := isHappy.(func(interface{}) interface{})
+	(*Testing)(t).RunTestsWithParams(params, f)
+
+	// for _, param := range params {
+	// 	actual := isHappy(param.n)
+	// 	assertEquals(t, param.expected, actual, "")
+	// }
 }

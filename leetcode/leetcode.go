@@ -104,3 +104,17 @@ func assertFalse(t *testing.T, evaluated bool, errorMessage string) bool {
 	}
 	return true
 }
+
+type Testing testing.T
+
+type TestParam struct {
+	value    interface{}
+	expected interface{}
+}
+
+func (t *Testing) RunTestsWithParams(params []TestParam, f func(value interface{}) bool) {
+	for _, param := range params {
+		actual := f(param.value)
+		assertEquals((*testing.T)(t), param.expected, actual, "")
+	}
+}
