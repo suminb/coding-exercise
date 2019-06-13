@@ -6,7 +6,7 @@ from typing import List
 
 import pytest
 
-from common import build_linked_list, ListNode, TreeNode
+from leetcode import build_linked_list, ListNode, TreeNode
 
 
 class MinHeap:
@@ -101,7 +101,7 @@ def build_min_heap(heap: MinHeap, list_node: ListNode) -> TreeNode:
 
 
 def test_merge_k_lists():
-    from common import assert_linked_list
+    from leetcode import assert_linked_list
     lists = [
         build_linked_list([1, 4, 5]),
         build_linked_list([1, 3, 4]),

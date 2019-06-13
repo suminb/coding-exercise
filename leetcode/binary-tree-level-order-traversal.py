@@ -4,7 +4,7 @@
 from collections import deque
 from typing import List
 
-from common import TreeNode
+from leetcode import TreeNode
 
 
 class Solution:

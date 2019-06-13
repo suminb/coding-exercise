@@ -1,7 +1,7 @@
 # 104. Maximum Depth of Binary Tree
 # difficulty: easy
 
-from common import build_binary_tree, TreeNode
+from leetcode import build_binary_tree, TreeNode
 
 
 class Solution:

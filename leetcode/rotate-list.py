@@ -1,6 +1,6 @@
 # 61. Rotate List
 
-from common import ListNode, TreeNode
+from leetcode import ListNode, TreeNode
 
 
 class Solution:

@@ -9,7 +9,7 @@ from typing import List
 
 import pytest
 
-from common import TreeNode
+from leetcode import TreeNode
 
 
 class Solution:

@@ -1,7 +1,7 @@
 # 98. Validate Binary Search Tree
 # difficulty: medium
 
-from common import TreeNode
+from leetcode import TreeNode
 
 
 class Solution:

@@ -3,7 +3,7 @@
 
 from collections import deque
 
-from common import TreeNode
+from leetcode import TreeNode
 
 
 class Solution:

@@ -1,6 +1,6 @@
 # 100. Same Tree
 
-from common import TreeNode
+from leetcode import TreeNode
 
 
 class Solution:

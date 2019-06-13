@@ -1,6 +1,6 @@
 from pytest import fixture
 
-from common import build_binary_tree as build_binary_tree_, TreeNode
+from leetcode import build_binary_tree as build_binary_tree_, TreeNode
 
 
 @fixture

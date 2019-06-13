@@ -3,7 +3,7 @@
 
 from typing import List
 
-from common import build_binary_tree, TreeNode
+from leetcode import build_binary_tree, TreeNode
 
 
 class Solution:
