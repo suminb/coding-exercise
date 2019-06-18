@@ -1,10 +1,13 @@
 # 763. Partition Labels
 # difficulty: medium
 # submissions:
+# https://leetcode.com/problems/partition-labels/
 # - https://leetcode.com/submissions/detail/211196386/ (33min, 35.62%)
 # - https://leetcode.com/submissions/detail/211198527/
 
 from typing import List
+
+import pytest
 
 
 class Solution:
@@ -19,7 +22,12 @@ class Solution:
         return [i2 - i1 for i1, i2 in zip(indices[:-1], indices[1:])]
 
 
-def test_solution():
+@pytest.mark.parametrize('string, expected', [
+    ('aaaa', [4]),
+    ('xyz', [1, 1, 1]),
+    ('ababcbacadefegdehijhklij', [9, 7, 8]),
+])
+def test_partition_labels(string, expected):
     s = Solution()
-    indicies = s.partitionLabels('ababcbacadefegdehijhklij')
-    assert indicies == [9, 7, 8]
+    actual = s.partitionLabels(string)
+    assert expected == actual
