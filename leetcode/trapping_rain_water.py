@@ -10,8 +10,20 @@ import pytest
 class Solution:
     def trap(self, height: List[int]) -> int:
         n = len(height)
+        max_to_left, max_to_right = self.explore(height)
+        volume = 0
+        for i in range(0, n):
+            wall = min(max_to_left[i], max_to_right[i])
+            volume += max(wall - height[i], 0)
 
-        # TODO: Perhaps we could do some code refactoring
+        return volume
+
+    def explore(self, height: List[int]):
+        """Explores the 'terrain'. By going through the terrain from left and
+        right, calculate the maximum height between the leftmost position and
+        each position. Do the same for the opposite direction.
+        """
+        n = len(height)
         max_left, max_right = 0, 0
         max_to_right = [0] * n
         max_to_left = [0] * n
@@ -22,14 +34,8 @@ class Solution:
             j = n - i - 1
             max_right = max(height[j + 1], max_right)
             max_to_right[j] = max_right
-
-        volume = 0
-        for i in range(0, n):
-            wall = min(max_to_left[i], max_to_right[i])
-            volume += max(wall - height[i], 0)
-
-        return volume
-
+        
+        return max_to_left, max_to_right
 
 
 @pytest.mark.parametrize('height, expected', [
