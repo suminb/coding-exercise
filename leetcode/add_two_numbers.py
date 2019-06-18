@@ -1,8 +1,10 @@
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+# 2. Add Two Numbers
+# difficulty: medium
+# https://leetcode.com/problems/add-two-numbers/
+# https://leetcode.com/submissions/detail/202465277/
+
+from leetcode import ListNode
+
 
 class Solution:
     def addTwoNumbers(self, l1, l2, p=0):
@@ -33,6 +35,3 @@ class Solution:
             node.next = self.addTwoNumbers(None, l2.next, p)
 
         return node
-
-
-# https://leetcode.com/submissions/detail/202465277/
