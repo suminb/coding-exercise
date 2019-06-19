@@ -1,8 +1,11 @@
-# Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, x):
-#         self.val = x
-#         self.next = None
+# 21. Merge Two Sorted Lists
+# difficulty: easy
+# https://leetcode.com/problems/merge-two-sorted-lists/
+# submissions:
+# https://leetcode.com/submissions/detail/203407798/
+
+from leetcode import ListNode
+
 
 class Solution:
     def mergeTwoLists(self, l1, l2):
@@ -24,6 +27,3 @@ class Solution:
             node.next = self.mergeTwoLists(l1, l2.next)
 
         return node
-
-
-# https://leetcode.com/submissions/detail/203407798/
