@@ -47,8 +47,9 @@ def cartesian_product(*sets):
 
 @pytest.mark.parametrize('digits, expected', [
     ('', []),
+    ('4', ['g', 'h', 'i']),
     ('23', ['ad', 'ae', 'af', 'bd', 'be', 'bf', 'cd', 'ce', 'cf']),
-    # TODO: We need more test cases
+    ('459', ['gjw', 'gjx', 'gjy', 'gjz', 'gkw', 'gkx', 'gky', 'gkz', 'glw', 'glx', 'gly', 'glz', 'hjw', 'hjx', 'hjy', 'hjz', 'hkw', 'hkx', 'hky', 'hkz', 'hlw', 'hlx', 'hly', 'hlz', 'ijw', 'ijx', 'ijy', 'ijz', 'ikw', 'ikx', 'iky', 'ikz', 'ilw', 'ilx', 'ily', 'ilz']), 
 ])
 def test_letter_combinations(digits, expected):
     actual = Solution().letterCombinations(digits)
