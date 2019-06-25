@@ -1,6 +1,10 @@
 .DS_Store
-.vscode
-__pycache__
 
+# Python
+__pycache__
 *.pyc
 
+# VS Code stuff
+.vscode
+launch.json
+settings.json
