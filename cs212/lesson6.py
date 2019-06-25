@@ -1,4 +1,9 @@
 import itertools
+import re
+
+#
+# Part 1: Zebra Puzzle
+#
 
 houses = [1, 2, 3, 4, 5]
 orderings = list(itertools.permutations(houses))
@@ -32,18 +37,6 @@ def all_ints():
         n += 1
 
 
-def compile_word(word):
-    """Compile a word of uppercase letters as numeric digits.
-    E.g., compile_word('YOU') => '(1*U+10*O+100*Y)'
-    Non-uppercase words unchanged: compile_word('+') => '+'"""
-
-    if word.isupper():
-        return '+'.join(
-            ['{}*{}'.format(10 ** i, w) for i, w in enumerate(word[::-1])])
-    else:
-        return word
-
-
 def zebra_puzzle():
     "Return a tuple (WATER, ZEBRA indicating their house numbers."
     houses = first, _, middle, _, _ = [1, 2, 3, 4, 5]
@@ -69,3 +62,48 @@ def zebra_puzzle():
                 if nextto(Chesterfields, fox)
                 if nextto(Kools, horse)
                 )
+
+
+#
+# Part 2: Solving Cryptarithmetic
+#
+
+
+def fill_in(formula):
+    """Generate all possible fillings-in of letters in formula with digits."""
+    letters = ''.join(set([x for x in formula if x.isalpha()]))
+    for digits in itertools.permutations('1234567890', len(letters)):
+        table = str.maketrans(letters, ''.join(digits))
+        yield formula.translate(table)
+
+
+def solve(formula):
+    """Given a formula like 'ODD + ODD == EVEN', fill in digits to solve it.
+    Input formula is a string; output is a digit-filled-in string or None."""
+    for f in fill_in(formula):
+        if valid(f):
+            return f
+    return None
+
+
+def valid(f):
+    """Formula f is valid if and only if it has no numbers with leading zero,
+    and evals true."""
+
+    # FIXME: eval() is slow. Use something else.
+    try: 
+        return not re.search(r'\b0[0-9]', f) and eval(f) is True
+    except ArithmeticError:
+        return False
+
+
+def compile_word(word):
+    """Compile a word of uppercase letters as numeric digits.
+    E.g., compile_word('YOU') => '(1*U+10*O+100*Y)'
+    Non-uppercase words unchanged: compile_word('+') => '+'"""
+
+    if word.isupper():
+        return '+'.join(
+            ['{}*{}'.format(10 ** i, w) for i, w in enumerate(word[::-1])])
+    else:
+        return word
