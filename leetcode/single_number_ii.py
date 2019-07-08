@@ -24,15 +24,27 @@ def single_number(nums):
     as constant. Therefore, O((d + 1)n) is contained in O(n).
     """
     n = len(nums)
-    m = max(nums)
+    min_ = min(nums)
+
+    # I don't quite understand how binary representation works with negative
+    # integers in Python, so I'll just make them non-negative numbers.
+    if min_ < 0:
+        for i in range(n):
+            nums[i] -= min_
+
+    bound = 1 << 64
     mask = 1
     res = 0
-    while mask <= m:
+    while mask <= bound:
         count = count_bits(nums, mask)
         if count % 3 != 0:
             res |= mask
         mask = mask << 1
-    return res
+
+    if min_ < 0:
+        return res + min_
+    else:
+        return res
 
 
 def count_bits(nums, mask):
@@ -50,7 +62,12 @@ def test_count_bits():
     ([1], 1),
     ([2, 2, 3, 2], 3), 
     ([0, 1, 0, 1, 0, 1, 99], 99),
+    ([-2, -2, 1, 1, -3, 1, -3, -3, -4, -2], -4), 
 ])
 def test_single_number(nums, expected):
     actual = single_number(nums)
     assert expected == actual
+
+
+if __name__ == '__main__':
+    pytest.main([__file__])
