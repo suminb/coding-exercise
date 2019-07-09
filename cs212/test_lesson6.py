@@ -52,5 +52,10 @@ def test_compile_word(word, expected):
     assert expected == actual
 
 
+# NOTE: A simple profiling can be done by invoking the following command:
+#
+#   python -m cProfile cs212/test_lesson6.py
+#
+
 if __name__ == '__main__':
     pytest.main(['-v', __file__])
