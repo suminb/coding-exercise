@@ -31,3 +31,41 @@ def compare_lists(l1, l2):
         n1 = n1.next
         n2 = n2.next
     return not (n1 or n2)
+
+
+class TreeNode:
+    def __init__(self, x, left=None, right=None):
+        self.val = x
+        self.left = left
+        self.right = right
+
+
+def build_binary_tree(xs):
+    """Builds a binary tree from a list of elements."""
+    def build(root, xs, i, n):
+        if i < n and xs[i] is not None:
+            root = TreeNode(xs[i])
+            root.left = build(root.left, xs, i * 2 + 1, n)
+            root.right = build(root.right, xs, i * 2 + 2, n)
+        return root
+
+    if not xs:
+        return None
+    else:
+        return build(None, xs, 0, len(xs))
+
+
+def print_binary_tree(node, depth=0):
+    if node:
+        print(' ' * (depth * 2) + str(node.val))
+        print_binary_tree(node.left, depth + 1)
+        print_binary_tree(node.right, depth + 1)
+
+
+def compare_binary_trees(tree1, tree2):
+    if tree1 and tree2:
+        return (tree1.val == tree2.val) \
+            and compare_binary_trees(tree1.left, tree2.left) \
+            and compare_binary_trees(tree1.right, tree2.right)
+    else:
+        return tree1 is None and tree2 is None
