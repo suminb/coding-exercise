@@ -46,7 +46,8 @@ def deepest(node):
         left = deepest(node.left)
         right = deepest(node.right)
         if left[0] and right[0]:
-            return (left[0], max(left[1], right[1]) + 1)
+            max_node = max(left, right, key=lambda x: x[1])
+            return (max_node[0], max_node[1] + 1)
         elif left[0]:
             return (left[0], left[1] + 1)
         elif right[0]:
@@ -60,6 +61,7 @@ def deepest(node):
 @pytest.mark.parametrize("root, expected", [
     ([], (None, 0)),
     (["x"], ("x", 1)),
+    (["a", "b", "c", None, None, None, "g"], ("g", 3)),
     (["a", "b", "c", "d"], ("d", 3)),
     (["a", "b", "c", "d", "e", "f"], ("d", 3)),
     (["a", "b", "c", "d", "e", "f", None, "h"], ("h", 4)),
