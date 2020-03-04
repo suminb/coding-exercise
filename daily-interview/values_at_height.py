@@ -43,8 +43,9 @@ def values_at_height(root, height):
         if node:
             if level == height:
                 values.append(node.val)
-            queue.append((node.left, level + 1))
-            queue.append((node.right, level + 1))
+            elif level < height:
+                queue.append((node.left, level + 1))
+                queue.append((node.right, level + 1))
 
     return values
 
