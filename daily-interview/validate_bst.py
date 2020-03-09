@@ -25,37 +25,30 @@
 # # / \ /
 # #1  4 6
 
+from math import inf
+
 import pytest
 
 from common import build_binary_tree
 
 
-def is_bst(root):
+def is_bst(root, left=-inf, right=inf):
     if root:
-        lmin, lmax, lflag = is_bst(root.left)
-        rmin, rmax, rflag = is_bst(root.right)
-        lmin = coalesce(lmin, root.val)
-        lmax = coalesce(lmax, root.val)
-        rmin = coalesce(rmin, root.val)
-        rmax = coalesce(rmax, root.val)
-        return (lmin, rmax, lflag and rflag and lmax <= root.val <= rmin)
+        return left <= root.val <= right and \
+            is_bst(root.left, left, root.val) and \
+            is_bst(root.right, root.val, right)
     else:
-        return (None, None, True)
-
-
-def coalesce(val1, val2):
-    if val1:
-        return val1
-    else:
-        return val2
+        return True
 
 
 @pytest.mark.parametrize("root, expected", [
     ([], True),
     ([1], True),
     ([5, 3, 7, 1, 4, 6], True),
+    ([1, 1, 1, 1, 1, 1, 1], True),
     ([1, 2, 3], False),
+    ([2, 1, 3, 3, 2], False),
 ])
 def test_is_bst(root, expected):
-    _, _, actual = is_bst(build_binary_tree(root))
+    actual = is_bst(build_binary_tree(root))
     assert expected == actual
