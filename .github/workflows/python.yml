@@ -19,4 +19,8 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest -v leetcode/*.py google/*.py cs212/test_*.py daily-interview/*.py
+        # Running these tests separately to avoid file name clashes
+        pytest -v leetcode/*.py
+        pytest -v google/*.py
+        pytest -v cs212/test_*.py
+        pytest -v daily-interview/*.py
