@@ -28,17 +28,22 @@ def running_mediam(stream):
         else:
             heappush(maxheap, x)
 
-        if len(maxheap) > len(minheap) + 1:
-            p = heappop(maxheap)
-            heappush(minheap, -p)
-        elif len(minheap) > len(maxheap):
-            p = heappop(minheap)
-            heappush(maxheap, -p)
+        rebalance(minheap, maxheap)
 
         median = get_median(minheap, maxheap)
         medians.append(median)
 
     return medians
+
+
+def rebalance(minheap, maxheap):
+    m, n = len(minheap), len(maxheap)
+    if n > m + 1:
+        p = heappop(maxheap)
+        heappush(minheap, -p)
+    elif m > n:
+        p = heappop(minheap)
+        heappush(maxheap, -p)
 
 
 def get_median(minheap, maxheap):
