@@ -57,8 +57,10 @@ def get_median(minheap, maxheap):
 @pytest.mark.parametrize("stream, expected", [
     ([], []),
     ([1], [1]),
+    ([1, -1, 1], [1, 0, 1]),
     ([1, 2, 3], [1, 1.5, 2]),
     ([2, 1, 4, 7, 2, 0, 5], [2, 1.5, 2, 3.0, 2, 2.0, 2]),
+    ([12, 4, 5, 3, 8, 7], [12, 8, 5, 4.5, 5, 6]),
 ])
 def test_running_median(stream, expected):
     actual = running_mediam(stream)
