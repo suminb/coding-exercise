@@ -2,6 +2,7 @@ from math import inf
 
 
 class MinStack:
+    """The time complexity of all operations is O(1)."""
 
     def __init__(self):
         """
@@ -11,22 +12,17 @@ class MinStack:
         self.min = inf
 
     def push(self, x: int) -> None:
-        self.stack.append(x)
+        # Store the value along with the previous min value
+        self.stack.append((x, self.min))
         if x < self.min:
             self.min = x
 
     def pop(self) -> None:
-        value = self.stack.pop()
-        if value == self.min:
-            # TODO: Can we do this faster than O(n)?
-            if self.stack:
-                self.min = min(self.stack)
-            else:
-                self.min = inf
+        value, self.min = self.stack.pop()
         return value
 
     def top(self) -> int:
-        return self.stack[-1]
+        return self.stack[-1][0]
 
     def getMin(self) -> int:
         return self.min
